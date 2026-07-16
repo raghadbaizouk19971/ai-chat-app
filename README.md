@@ -177,6 +177,17 @@ mvn test
 
 Covers validation on `/api/chat` and a few upstream error paths (mocked — no real API key needed). Docker builds also run the tests.
 
+Health check endpoint: `GET /api/health` → `{ "status": "ok" }` (used by Docker `HEALTHCHECK`).
+
+## CI notes (GHCR)
+
+On push to `main`, the workflow builds the project and pushes a Docker image to GHCR.
+
+If the push fails with `permission_denied: write_package`:
+
+1. Repo **Settings → Actions → General → Workflow permissions** → **Read and write permissions**
+2. Or create a classic PAT with `write:packages` + `read:packages` (+ `repo`), then add it as repo secret **`GHCR_TOKEN`**
+
 ## If I had more time
 
 - Stream replies (SSE) instead of waiting for the full answer.
